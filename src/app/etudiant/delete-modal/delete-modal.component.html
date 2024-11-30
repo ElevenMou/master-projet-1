@@ -12,10 +12,18 @@
   </p>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-outline-secondary" (click)="close()" >
+  <button
+    type="button"
+    class="btn btn-outline-secondary"
+    (click)="activeModal.close('non')"
+  >
     Cancel
   </button>
-  <button type="button" class="btn btn-danger" (click)="deleteEtudiant()">
+  <button
+    type="button"
+    class="btn btn-danger"
+    (click)="activeModal.close('oui')"
+  >
     Delete
   </button>
 </div>

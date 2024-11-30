@@ -42,12 +42,28 @@ export class EtudiantService {
   }
 
   deleteEtudiant(id: number) {
-    //const index=this.etudiants.findIndex(etudiant=>(etudiant.id==id))
-    //this.etudiants.splice(index,1)
+    this.http
+      .delete<boolean>(this.backEndURL + '/' + id)
+      .subscribe((retour) => {
+        if (retour) {
+          this.etudiants.update((state) => state.filter((e) => e.id != id));
+        }
+      });
   }
 
   updateEtudiant(etudiant: any) {
-    //const index=this.etudiants.findIndex(currentEtudiant=>(currentEtudiant.id==etudiant.id))
-    //this.etudiants[index]=etudiant
+    this.http
+      .put<Etudiant>(this.backEndURL, etudiant)
+      .subscribe((newEtudiant) => {
+        this.etudiants.update((state) => {
+          return state.map((e) => {
+            if (e.id == newEtudiant.id) {
+              return newEtudiant;
+            } else {
+              return e;
+            }
+          });
+        });
+      });
   }
 }

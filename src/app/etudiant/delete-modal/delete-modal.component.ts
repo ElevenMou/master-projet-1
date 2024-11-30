@@ -11,17 +11,6 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class DeleteModalComponent {
   etudiantData: any;
-  constructor(
-    private etudiantService: EtudiantService,
-    private activeModal: NgbActiveModal
-  ) {}
-
-  deleteEtudiant() {
-    this.etudiantService.deleteEtudiant(this.etudiantData.id);
-    this.activeModal.close();
-  }
-
-  close() {
-    this.activeModal.close();
-  }
+  constructor(public activeModal: NgbActiveModal) {}
+  deleteEtudiant(id: number) {}
 }
