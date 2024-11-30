@@ -9,13 +9,13 @@
       </tr>
     </thead>
     <tbody>
-      @for (etudiant of etudiants; track $index) {
+      @for (etudiant of etudiants(); track $index) {
       <tr>
         <td>{{ etudiant.id }}</td>
         <td>{{ etudiant.nom }}</td>
         <td>{{ etudiant.age }}</td>
         <td>
-          <button class="btn btn-primary" (click)="editEtudiant(etudiant.id)">
+          <button class="btn btn-primary">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -39,10 +39,7 @@
               />
             </svg>
           </button>
-          <button
-            class="btn btn-danger ml-4"
-            (click)="deleteEtudiant(etudiant.id)"
-          >
+          <button class="btn btn-danger ml-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"

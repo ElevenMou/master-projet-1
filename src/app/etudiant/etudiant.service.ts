@@ -1,52 +1,53 @@
-import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, signal } from '@angular/core';
+import { Etudiant } from './etudiant.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EtudiantService {
-  etudiants = [
-    {
-      id: 1,
-      nom: 'mohamed',
-      age: 25,
-    },
-    {
-      id: 2,
-      nom: 'mohamed',
-      age: 25,
-    },
-    {
-      id: 3,
-      nom: 'mohamed',
-      age: 25,
-    },
-  ];
-
-  constructor() {}
-
-  getEtudiants() {
-    return this.etudiants;
+  backEndURL = 'http://100.85.195.32:8080/ecole/etudiants';
+  //etudiants:any=[]
+  etudiants = signal<Etudiant[]>([]);
+  constructor(private http: HttpClient) {
+    //
+    this.getAllEtudiants();
   }
 
-  addEtudiant(etudiant: any) {
-    this.etudiants.push({
-      id: etudiant.id,
-      nom: etudiant.nom,
-      age: etudiant.age,
+  /*getAllEtudiants():any{
+    //return this.etudiants
+    this.http.get(this.backEndURL).subscribe(data=>{
+      this.etudiants=data
+    })
+    return this.etudiants
+  }*/
+
+  getAllEtudiants(): void {
+    //return this.etudiants
+    this.http.get<Etudiant[]>(this.backEndURL).subscribe((data) => {
+      this.etudiants.set(data);
     });
+  }
+  /*addEtudiant(etudiant:any){
+    //this.etudiants.push(etudiant)
+    this.http.post(this.backEndURL,etudiant).subscribe()
+  }*/
+  addEtudiant(etudiant: any) {
+    //this.etudiants.push(etudiant)
+    this.http
+      .post<Etudiant>(this.backEndURL, etudiant)
+      .subscribe((newEtudiant) => {
+        this.etudiants.update((state) => [...state, newEtudiant]);
+      });
   }
 
   deleteEtudiant(id: number) {
-    const index = this.etudiants.findIndex((etudiant) => etudiant.id === id);
-    this.etudiants.splice(index, 1);
+    //const index=this.etudiants.findIndex(etudiant=>(etudiant.id==id))
+    //this.etudiants.splice(index,1)
   }
 
-  editEtudiant(etudiant: any) {
-    const index = this.etudiants.findIndex((et) => et.id === etudiant.id);
-    this.etudiants[index] = {
-      id: etudiant.id,
-      nom: etudiant.nom,
-      age: etudiant.age,
-    };
+  updateEtudiant(etudiant: any) {
+    //const index=this.etudiants.findIndex(currentEtudiant=>(currentEtudiant.id==etudiant.id))
+    //this.etudiants[index]=etudiant
   }
 }

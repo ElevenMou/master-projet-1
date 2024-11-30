@@ -31,7 +31,7 @@ export class FormComponent {
   }
   addEtudiant() {
     if (this.etudiantData) {
-      this.etudiantService.editEtudiant(this.formData.value);
+      this.etudiantService.updateEtudiant(this.formData.value);
       this.activeModal.close();
     } else {
       this.etudiantService.addEtudiant(this.formData.value);
